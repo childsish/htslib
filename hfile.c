@@ -564,7 +564,28 @@ static ssize_t fd_write(hFILE *fpv, const void *buffer, size_t nbytes)
 static off_t fd_seek(hFILE *fpv, off_t offset, int whence)
 {
     hFILE_fd *fp = (hFILE_fd *) fpv;
+#ifndef EMSCRIPTEN
     return lseek(fp->fd, offset, whence);
+#else
+    off_t res = 0;
+    if (offset <= INT_MAX) {
+        res = lseek(fp->fd, offset, SEEK_SET);
+    }
+    else {
+        res = lseek(fp->fd, 0, SEEK_SET);
+        for (int i = 0; i < offset / INT_MAX && res != -1; ++i) {
+            res = lseek(fp->fd, INT_MAX, SEEK_CUR);
+        }
+        if (res != -1) {
+            res = lseek(fp->fd, offset % INT_MAX, SEEK_CUR);
+        }
+    }
+    if (res == -1) {
+        perror("[E::read_fasta]");
+    }
+    return res;
+#endif
+
 }
 
 static int fd_flush(hFILE *fpv)
