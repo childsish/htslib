@@ -20,6 +20,7 @@
 //#include <sys/cdefs.h>
 //__FBSDID("$FreeBSD: src/lib/libc/gen/_rand48.c,v 1.2 2002/03/22 21:52:05 obrien Exp $");
 
+#include "htslib/hts_defs.h"
 #include <math.h>
 
 #define	RAND48_SEED_0	(0x330e)

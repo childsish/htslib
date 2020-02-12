@@ -34,8 +34,11 @@
 /* Define if libcurl file access is enabled. */
 #cmakedefine HAVE_LIBCURL
 
-/* Define to 1 if you have the `z' library (-lz). */
-#cmakedefine01 HAVE_LIBZ
+/* Define if you have the `deflate' library (-ldeflate). */
+#cmakedefine HAVE_LIBDEFLATE
+
+/* Define if you have the `z' library (-lz). */
+#cmakedefine HAVE_LIBZ
 
 /* Define to 1 if you have the <memory.h> header file. */
 #cmakedefine01 HAVE_MEMORY_H
